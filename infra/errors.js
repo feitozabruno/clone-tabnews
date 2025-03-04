@@ -4,7 +4,7 @@ export class InternalServerError extends Error {
       cause,
     });
 
-    this.name = "InternalServerError";
+    this.name = this.constructor.name;
     this.action = "Entre em contato com o suporte.";
     this.statusCode = statusCode || 500;
   }
@@ -23,7 +23,7 @@ export class MethodNotAllowedError extends Error {
   constructor() {
     super("Método não permitido para este endpoint.");
 
-    this.name = "MethodNotAllowedError";
+    this.name = this.constructor.name;
     this.action =
       "Verifique se o método HTTP enviado é válido para este endpoint.";
     this.statusCode = 405;
