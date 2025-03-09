@@ -4,7 +4,7 @@ export class InternalServerError extends Error {
       cause,
     });
 
-    this.name = this.constructor.name;
+    this.name = "InternalServerError";
     this.action = "Entre em contato com o suporte.";
     this.statusCode = statusCode || 500;
   }
@@ -23,7 +23,7 @@ export class MethodNotAllowedError extends Error {
   constructor() {
     super("Método não permitido para este endpoint.");
 
-    this.name = this.constructor.name;
+    this.name = "MethodNotAllowedError";
     this.action =
       "Verifique se o método HTTP enviado é válido para este endpoint.";
     this.statusCode = 405;
@@ -48,6 +48,27 @@ export class ServiceError extends Error {
     this.name = "ServiceError";
     this.action = "Verifique se o serviço está disponível.";
     this.statusCode = 503;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
+
+export class ValidationError extends Error {
+  constructor({ cause, message, action }) {
+    super(message || "Um erro de validação ocorreu.", {
+      cause,
+    });
+
+    this.name = "ValidationError";
+    this.action = action || "Ajuste os dados enviados e  teste novamente.";
+    this.statusCode = 400;
   }
 
   toJSON() {
